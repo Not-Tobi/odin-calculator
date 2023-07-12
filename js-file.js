@@ -2,90 +2,80 @@ let num1 = 0;
 let num2 = '';
 let operator = '';
 let solution;
-let activeClear = false;
+let wipeData = false;
 const operatorList = ['+', '-', 'x', '÷'];
+//Storing Num1 and Num2
+function determineNum1orNum2(buttonFunction) {
+    if (operator === '') {
+        num1 = buttonFunction(num1);
+    }
+    else if (operator !== '') {
+        num2 = buttonFunction(num2);
+        showCurrentSolution();
+    }
+    display(num1, operator, num2);
+}
 
 // Number Pads
 const numBtns = document.querySelectorAll('.pad')
 for (let i = 0; i < numBtns.length; i++) {
     numBtns[i].addEventListener("click", () => {
         if (operator === '') {
-            num1 += i.toString();
-            num1 = Number(num1);
+            num1 = addNumber(num1, i);
         }
         else if (operator !== '') {
-            num2 += i.toString();
-            num2 = Number(num2);  
+            num2 = addNumber(num2, i);
             showCurrentSolution();
         }
         display(num1, operator, num2);
     })
 }
 
-const decimalBtn = document.querySelector('.decimal')
-decimalBtn.addEventListener("click", () => {
-    if (operator === '') {
-        num1 = num1.toString().split('')
-        if (num1.some((number) => number === '.')) {
-            num1 = num1.join('')
-        }
-        else {
-            num1 = num1.join('')
-            num1 += '.';
-        }
-    }
-    else if (operator !== '') {
-        num2 = num2.toString().split('')
-        if (num2.some((number) => number === '.')) {
-            num2 = num2.join('')
-        }
-        else {
-            num2 = num2.join('')
-            num2 += '.';
-        }
-    }
-    display(num1, operator, num2);
-    
-})
-
-const removeBtn = document.querySelector('.remove')
-removeBtn.addEventListener("click", () => {
-    if (operator === '') {
-        num1 = num1.toString().split('')
-        num1.pop()
-        num1 = num1.join('')
-    }
-    else if (operator !== '') {
-        num2 = num2.toString().split('')
-        num2.pop()
-        num2 = num2.join('')
-        showCurrentSolution();
-    }
-    display(num1, operator, num2);
-})
-
 const operatorBtns = document.querySelectorAll('.operatorBtn')
 for (let i = 0; i < operatorBtns.length; i++) {
     operatorBtns[i].addEventListener("click", () => {
-        if (num1 !== '' && num2 !== '') {
-            calculation();
-        }
+        if (num1 !== '' && num2 !== '') {calculation();}
         operator = operatorList[i];
         display(num1, operator, num2);
     })
 }
 
+const decimalBtn = document.querySelector('.decimal')
+decimalBtn.addEventListener("click", () => {determineNum1orNum2(addDecimal);})
+
+const removeBtn = document.querySelector('.remove')
+removeBtn.addEventListener("click", () => {determineNum1orNum2(removeNumber);})
+
 const equalBtn = document.querySelector('.operate')
-equalBtn.addEventListener('click', () => {
-    activeClear = false;
-    calculation(activeClear);
-})
+equalBtn.addEventListener('click', () => {calculation(wipeData = false);})
 
 const clearBtn = document.querySelector('.clear')
-clearBtn.addEventListener('click', () => {
-    activeClear = true;
-    calculation(activeClear);
-})
+clearBtn.addEventListener('click', () => {calculation(wipeData = true);})
+
+// Button Functions
+function addNumber(number, index) {
+    number += index.toString();
+    number = Number(number);
+    return number
+}
+
+function removeNumber(number) {
+    number = number.toString().split('')
+    number.pop()
+    return number.join('')
+}
+
+function addDecimal(number) {
+    number = number.toString().split('')
+    if (number.some((number) => number === '.')) {
+        number = number.join('')
+    }
+    else {
+        number = number.join('')
+        number += '.';
+    }
+    return number;
+}
 
 // Calculate
 function operate(num1, operator, num2) {
@@ -116,12 +106,12 @@ function divide(num1, num2) {
     return num1 / num2;
 }
 
-function calculation(activeClear) {
+function calculation(wipeData) {
     solution = operate(num1, operator, num2);
     num1 = solution;
     operator = '';
     num2 = '';
-    if (activeClear) {num1 = '0'};    
+    if (wipeData) {num1 = '0'};    
     display(num1, operator, num2);
     display2(solution = 0);
 }
