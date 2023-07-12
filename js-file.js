@@ -1,63 +1,68 @@
 let num1 = '';
 let num2 = '';
 let operator = '';
-const operatorList = ["+", "-", "*", "/"];
+let solution;
+const operatorList = ['+', '-', '*', '/'];
 
 // Number Pads
-const numPad = document.querySelectorAll(".pad");
-for (let i = 0; i < numPad.length; i++) {
-    numPad[i].addEventListener('click', () => {  
-        if (num2 === '' && operator === '') {
-            num1 += i.toString()
-            num1 = Number(num1)
-            display(num1, operator, num2);
+const numBtns = document.querySelectorAll('.pad')
+for (let i = 0; i < numBtns.length; i++) {
+    numBtns[i].addEventListener("click", () => {
+        if (operator === '') {
+            num1 += i.toString();
+            num1 = Number(num1);
         }
-        else {
-            num2 += i.toString()
-            num2 = Number(num2)
-            display(num1, operator, num2);
+        else if (operator !== '') {
+            num2 += i.toString();
+            num2 = Number(num2);  
+            showCurrentSolution();
         }
+        display(num1, operator, num2);
     })
 }
 
-// Operator Buttons
-const fourOperator = document.querySelectorAll(".operator");
-for (let i = 0; i < fourOperator.length; i++) {
-    fourOperator[i].addEventListener('click', () => { 
-        if (!(num1 === '' && num2 === '')) {
-            num1 = operate(num1, operator, num2);
-            num2 = '';
-        }   
+const operatorBtns = document.querySelectorAll('.operatorBtn')
+for (let i = 0; i < operatorBtns.length; i++) {
+    operatorBtns[i].addEventListener("click", () => {
+        if (num1 !== '' && num2 !== '') {
+            solution = operate(num1, operator, num2);
+            prepNextCalculation();
+        }
         operator = operatorList[i];
         display(num1, operator, num2);
     })
 }
 
-const equal = document.querySelector(".operate");
-equal.addEventListener('click', () => {   
-    num1 = operate(num1, operator, num2);
-    operator = '';
-    num2 = '';
+const equalBtn = document.querySelector('.operate')
+equalBtn.addEventListener('click', () => {
+    solution = operate(num1, operator, num2);
+    prepNextCalculation();
+    display(num1, operator, num2);
+})
+
+const clearBtn = document.querySelector('.clear')
+clearBtn.addEventListener('click', () => {
+    prepNextCalculation();
+    num1 = ''
     display(num1, operator, num2);
 })
 
 // Calculate
 function operate(num1, operator, num2) {
     switch (operator) {
-        case "+":
-            num1 = add(num1, num2);
-            break;
-        case "-":
-            num1 = subtract(num1, num2);
-            break;
-        case "*":
-            num1 = multiply(num1, num2);
-            break;
-        case "/":
-            num1 = divide(num1, num2);
-            break;
-    } 
-    return Math.round(num1 * 100) / 100;
+        case '+':
+            return Math.round(add(num1, num2) * 100) / 100;
+        case '-':
+            return Math.round(subtract(num1, num2) * 100) / 100;
+        case '*':
+            return Math.round(multiply(num1, num2) * 100) / 100;
+        case '/':
+            solution = Math.round(divide(num1, num2) * 100) / 100;
+            if (solution === Infinity) {
+                display2(solution = 'ERROR!');
+            }
+            return solution;
+    }
 }
 
 function add(num1, num2) {
@@ -73,8 +78,25 @@ function divide(num1, num2) {
     return num1 / num2;
 }
 
+function prepNextCalculation() {
+    num1 = solution
+    operator = ''
+    num2 = ''
+    display2(solution = 0)
+}
+
+function showCurrentSolution() {
+    solution = operate(num1, operator, num2);
+    display2(solution);
+}
+
 // Display
 function display(num1, operator, num2) {
-    const display = document.querySelector(".display")
-    display.textContent = `${num1} ${operator} ${num2}`;
+    let display = document.querySelector('.display')
+    display.textContent = `${num1} ${operator} ${num2}`
+}
+
+function display2(solution) {
+    let display2 = document.querySelector('.display2')
+    display2.textContent = `${solution}`
 }
