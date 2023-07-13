@@ -3,19 +3,32 @@ let num2 = '';
 let operator = '';
 let solution;
 let wipeData = false;
+function limitCheck() {
+    let totalLength = num1 + operator + num2
+    if (totalLength.length > 10) {
+        alert('You reach the limit!');
+        return false;
+    }
+    else {
+        return true
+    }
+}
+
 // Number Pads
 const numBtns = document.querySelectorAll('.pad')
 for (let i = 0; i < numBtns.length; i++) {
     numBtns[i].addEventListener("click", () => {
-        if (operator === '') {
-            num1 = addNumber(num1, numBtns[i].value);
-        }
-        else if (operator !== '') {
-            num2 = addNumber(num2, numBtns[i].value);
-            showCurrentSolution();
-        }
-        display(num1, operator, num2);
-    })
+            if (limitCheck()) {
+                if (operator === '') {
+                    num1 = addNumber(num1, numBtns[i].value);
+                }
+                else if (operator !== '') {
+                    num2 = addNumber(num2, numBtns[i].value);
+                    showCurrentSolution();
+                }
+                display(num1, operator, num2);
+            }
+        })
 }
 
 const operatorBtns = document.querySelectorAll('.operatorBtn')
