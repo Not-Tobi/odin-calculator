@@ -1,10 +1,47 @@
-let num1 = 0;
+let num1 = '0';
 let num2 = '';
 let operator = '';
 let solution;
 let wipeData = false;
-const operatorList = ['+', '-', 'x', '÷'];
-//Storing Num1 and Num2
+// Number Pads
+const numBtns = document.querySelectorAll('.pad')
+for (let i = 0; i < numBtns.length; i++) {
+    numBtns[i].addEventListener("click", () => {
+        if (operator === '') {
+            num1 = addNumber(num1, numBtns[i].value);
+        }
+        else if (operator !== '') {
+            num2 = addNumber(num2, numBtns[i].value);
+            showCurrentSolution();
+        }
+        display(num1, operator, num2);
+    })
+}
+
+const operatorBtns = document.querySelectorAll('.operatorBtn')
+for (let i = 0; i < operatorBtns.length; i++) {
+    operatorBtns[i].addEventListener("click", () => {
+        if (num1 !== '' && num2 !== '') {calculation();}
+        operator = operatorBtns[i].value;
+        display(num1, operator, num2);
+    })
+}
+const equalBtn = document.querySelector('.operate')
+equalBtn.addEventListener('click', () => {
+    if (num1 === '' || operator === '' || num2 === '') {alert('Please complete your calculation')}
+    else {calculation(wipeData = false);}  
+})
+
+const decimalBtn = document.querySelector('.decimal')
+decimalBtn.addEventListener("click", () => {determineNum1orNum2(addDecimal);})
+
+const removeBtn = document.querySelector('.remove')
+removeBtn.addEventListener("click", () => {determineNum1orNum2(removeNumber);})
+
+const clearBtn = document.querySelector('.clear')
+clearBtn.addEventListener('click', () => {calculation(wipeData = true);})
+
+// Button Functions
 function determineNum1orNum2(buttonFunction) {
     if (operator === '') {
         num1 = buttonFunction(num1);
@@ -16,46 +53,9 @@ function determineNum1orNum2(buttonFunction) {
     display(num1, operator, num2);
 }
 
-// Number Pads
-const numBtns = document.querySelectorAll('.pad')
-for (let i = 0; i < numBtns.length; i++) {
-    numBtns[i].addEventListener("click", () => {
-        if (operator === '') {
-            num1 = addNumber(num1, i);
-        }
-        else if (operator !== '') {
-            num2 = addNumber(num2, i);
-            showCurrentSolution();
-        }
-        display(num1, operator, num2);
-    })
-}
-
-const operatorBtns = document.querySelectorAll('.operatorBtn')
-for (let i = 0; i < operatorBtns.length; i++) {
-    operatorBtns[i].addEventListener("click", () => {
-        if (num1 !== '' && num2 !== '') {calculation();}
-        operator = operatorList[i];
-        display(num1, operator, num2);
-    })
-}
-
-const decimalBtn = document.querySelector('.decimal')
-decimalBtn.addEventListener("click", () => {determineNum1orNum2(addDecimal);})
-
-const removeBtn = document.querySelector('.remove')
-removeBtn.addEventListener("click", () => {determineNum1orNum2(removeNumber);})
-
-const equalBtn = document.querySelector('.operate')
-equalBtn.addEventListener('click', () => {calculation(wipeData = false);})
-
-const clearBtn = document.querySelector('.clear')
-clearBtn.addEventListener('click', () => {calculation(wipeData = true);})
-
-// Button Functions
 function addNumber(number, index) {
     number += index.toString();
-    number = Number(number);
+    if (number > 0) {number = Number(number);}
     return number
 }
 
@@ -113,7 +113,7 @@ function calculation(wipeData) {
     num2 = '';
     if (wipeData) {num1 = '0'};    
     display(num1, operator, num2);
-    display2(solution = 0);
+    display2(solution = '');
 }
 
 function showCurrentSolution() {

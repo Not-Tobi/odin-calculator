@@ -8,36 +8,45 @@
     <script src="js-file.js" defer></script>
 </head>
 <body>
-    <div class="display">0</div>
-    <div class="display2">0</div>
+    <div class="title">Calculator</div>
 
-    <div class="digits">  
-        <button class="pad 0">0</button>
-        <button class="pad 1">1</button>
-        <button class="pad 2">2</button>
-        <button class="pad 3">3</button>
-        <button class="pad 4">4</button>
-        <button class="pad 5">5</button>
-        <button class="pad 6">6</button>
-        <button class="pad 7">7</button>
-        <button class="pad 8">8</button>
-        <button class="pad 9">9</button>
+    <div class="center">
+        <div class="calculatorBody">
+            <div class="screen">
+                <div class="display">0</div>
+                <div class="display2"></div>
+            </div>
 
-        <button class="decimal">.</button>
-    </div> 
+            <div class="allButtons"> 
+                 <div class ='numberPad'>
+                    <button class="clear wide">AC</button>
+                    <button class="remove  wide">DEL</button>
+                
+                    <button class="pad 7" value='7'>7</button>
+                    <button class="pad 8" value='8'>8</button>
+                    <button class="pad 9" value='9'>9</button>
+                    <button class="operatorBtn" value='÷'>÷</button>
 
-    <div class="operators">
-        <button class="remove">⌫</button>
-        <button class="clear">clear</button>
+                    <button class="pad 4" value='4'>4</button>
+                    <button class="pad 5" value='5'>5</button>
+                    <button class="pad 6" value='6'>6</button>
+                    <button class="operatorBtn" value='x'>x</button>
 
+                    <button class="pad 1" value='1'>1</button>
+                    <button class="pad 2" value='2'>2</button>
+                    <button class="pad 3" value='3'>3</button>
+                    <button class="operatorBtn" value='-'>-</button>
 
-        <button class="operatorBtn add">+</button>
-        <button class="operatorBtn subtract">-</button>
-        <button class="operatorBtn multiply">x</button>
-        <button class="operatorBtn divide">÷</button>
+                    <button class="pad 0" value='0'>0</button>
+                    <button class="decimal">.</button>
+                    <button class="operate">=</button> 
+                    <button class="operatorBtn" value='+'>+</button>   
+                </div>
+            </div> 
 
-        <button class="operate">=</button>
-
+        </div>
     </div>
+
+    <div class="footer">Made By Not-Tobi</div>
 </body>
 </html>
