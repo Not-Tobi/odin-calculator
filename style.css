@@ -2,8 +2,8 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    background-color: white;
-    color: #4b454f;
+    background-color: #4b454f;
+    color: white;
     font-family: Roboto, sans-serif;
     display: flex;
     flex-direction: column;
@@ -13,7 +13,7 @@ body {
 .title {
     margin-top: 20px;
     font-size: 60px;
-    color: #4b454f;
+    color: white;
     font-weight: bold;
     display: flex;
     justify-content: center;
@@ -30,8 +30,9 @@ body {
     width: 300px;
     padding: 20px;
     border-radius: 30px;
-    border:solid 5px #4b454f;
+    border:solid 5px white;
     background-color: #B06E84;
+    box-shadow: 0px 0px 20px black;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -44,8 +45,8 @@ body {
     border-radius: 10px;
     margin-bottom: 15px;
     padding: 10px;
-    background-color: #4b454f;
-    color: white;
+    background-color: white;
+    color: #4b454f;
     display: flex;
     flex-shrink: 0;
     flex-direction: column;
@@ -102,8 +103,8 @@ button:active{
 /* Footer */
 .footer {
     padding: 25px 0;
-    background-color: #4b454f;
-    color: white;
+    background-color: white;
+    color: #4b454f;
     display: flex;
     justify-content: center;
 }
